@@ -1,20 +1,44 @@
 import MessageCardListStyle from "./MessageCardListStyle";
 import MessageCard from "./MessageCard";
 import AddMessageCardButton from "./AddMessageCardButton";
+import { useEffect, useState } from "react";
+import { deleteMessage } from "../../api/post/fetchMessages";
 
 /**
  * @param {boolean} editMode - 편집 모드
  */
 const MessageCardList = ({ messages = [], editMode = false }) => {
-  if (!messages || messages.length === 0) {
+  const [localMessages, setLocalMessages] = useState(messages);
+
+  useEffect(() => {
+    setLocalMessages(messages);
+  }, [messages]);
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteMessage({ id });
+      setLocalMessages((prev) => prev.filter((msg) => msg.id !== id));
+    } catch (err) {
+      alert("삭제에 실패했어요.");
+      console.error(err);
+    }
+  };
+
+  if (!localMessages || localMessages.length === 0) {
     return <EmptyMessageCardList editMode={editMode} />;
   }
 
   // 메시지가 1개 이상이고, 편집 모드가 아니면 메시지 리스트 보여주기
-  return <CardListResult messages={messages} editMode={editMode} />;
+  return (
+    <CardListResult
+      messages={localMessages}
+      editMode={editMode}
+      onDelete={handleDelete}
+    />
+  );
 };
 
-function CardListResult({ messages, editMode }) {
+function CardListResult({ messages, editMode, onDelete }) {
   return (
     <div css={MessageCardListStyle}>
       {!editMode && <AddMessageCardButton />}
@@ -23,6 +47,7 @@ function CardListResult({ messages, editMode }) {
           key={message.id}
           messageData={message}
           isEditable={editMode}
+          onDelete={onDelete}
         />
       ))}
     </div>

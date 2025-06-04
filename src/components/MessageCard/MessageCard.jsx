@@ -3,8 +3,13 @@ import Avatar from "../Avatar";
 import { IconDeleteButton } from "./../Button/IconButtons";
 import formatDate from "../../utils/formatDate";
 
-const MessageCard = ({ messageData = {}, isEditable = false }) => {
+const MessageCard = ({
+  messageData = {},
+  isEditable = false,
+  onDelete = () => {},
+}) => {
   const {
+    id,
     sender,
     profileImageURL,
     relationship = "친구",
@@ -15,7 +20,7 @@ const MessageCard = ({ messageData = {}, isEditable = false }) => {
 
   const handleDelete = (e) => {
     e.stopPropagation(); // 이벤트 버블링 방지
-    alert("delete button clicked");
+    onDelete(id); // 상위에서 넘겨준 삭제 로직 호출
   };
 
   return (
