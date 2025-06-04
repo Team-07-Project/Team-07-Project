@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import cardPreview from "../../../assets/images/card_preview.png";
 import emojiPreview from "../../../assets/images/emoji_preview.png";
@@ -43,14 +42,17 @@ const MainPage = () => {
           image={emojiPreview}
           reverse
         />
-
         {/* 구경해보기 버튼 */}
-        <div css={[customButtonWrapper, responsiveBox]}>
-          <Link to="/list" css={{ width: "100%", height: "100%" }}>
-            <Button variant="primary" size="lg">
-              구경해보기
-            </Button>
-          </Link>
+        <div css={[responsiveBox, flexCenter]}>
+          <Button
+            as={Link}
+            to="/list"
+            css={ctaButton}
+            variant="primary"
+            size="lg"
+          >
+            구경해보기
+          </Button>
         </div>
       </div>
     </>
@@ -60,30 +62,23 @@ export default MainPage;
 
 // 헤더 우측에 노출되는 "롤링 페이퍼 만들기" 버튼
 const HeaderButton = () => (
-  <Link
+  <Button
+    as={Link}
     to="/post"
+    variant="outlined"
+    size="md"
     css={css`
       width: 157px;
       height: 40px;
       display: block;
-
-      @media (max-width: ${BREAKPOINTS.sm}px) {
+      @media (max-width: ${BREAKPOINTS.md}px) {
         width: 142px;
-      }
-
-      & > button {
-        width: 100% !important;
-        height: 100% !important;
-        @media (max-width: ${BREAKPOINTS.sm}px) {
-          font-size: var(--font-size-14) !important;
-        }
+        font-size: var(--font-size-14);
       }
     `}
   >
-    <Button variant="outlined" size="md">
-      롤링 페이퍼 만들기
-    </Button>
-  </Link>
+    롤링 페이퍼 만들기
+  </Button>
 );
 
 // Point.01, Point.02 공통 영역 컴포넌트
@@ -246,36 +241,19 @@ const breakLine = css`
 
 export const responsiveBox = css`
   width: 100%;
-  max-width: 320px;
-
-  @media (min-width: ${BREAKPOINTS.md}px) {
-    max-width: 720px;
-  }
-  @media (min-width: ${BREAKPOINTS.lg}px) {
-    max-width: 1200px;
-  }
+  max-width: clamp(320px, 90vw, 1200px);
 `;
 
 // 하단 '구경해보기' 버튼 스타일 (정렬 + 반응형 너비)
-const customButtonWrapper = css`
-  max-width: 320px;
+const ctaButton = css`
   width: 100%;
   height: 56px;
   margin-top: 24px;
-
-  a {
-    display: flex;
-    justify-content: center;
-  }
-
-  button {
-    width: 100% !important;
-    height: 100% !important;
-    font-size: var(--font-size-18) !important;
-    font-weight: 700 !important;
-    @media (min-width: ${BREAKPOINTS.lg}px) {
-      max-width: 280px;
-    }
+  font-size: var(--font-size-18);
+  font-weight: 700;
+  @media (min-width: ${BREAKPOINTS.lg}px) {
+    max-width: 280px;
+    margin-top: 0;
   }
 `;
 
@@ -285,4 +263,10 @@ const reverseStyle = css`
     flex-direction: row-reverse;
     padding: 60px 60px 60px 0;
   }
+`;
+
+const flexCenter = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

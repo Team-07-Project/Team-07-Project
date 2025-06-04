@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { GlobalHeaderStyle } from "../../components/Header/GlobalHeader";
-import { IconShare24Button } from "../../components/Button/IconButtons";
+import { IconShareButton } from "../../components/Button/IconButtons";
 import AddEmojiButton from "../../components/Button/AddEmojiButton";
 import MessageAuthorCount from "../../components/MessageAuthorCount";
 
@@ -42,7 +42,7 @@ const ListPageHeader = ({ recipient }) => {
             </AddEmojiButton>
           </li>
           <li className="li-action-share">
-            <IconShare24Button onClick={shareRollingPaper} />
+            <IconShareButton onClick={shareRollingPaper} />
           </li>
         </ul>
       </div>
