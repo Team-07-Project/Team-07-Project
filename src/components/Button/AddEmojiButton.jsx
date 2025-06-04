@@ -48,4 +48,15 @@ const AddEmojiButtonStyle = (props) => css`
       display: block;
     }
   }
+
+  @media (max-width: ${BREAKPOINTS.md}px) {
+    width: 36px;
+    height: 32px;
+    padding: 0 !important;
+
+    & > .btn-icon {
+      width: 20px;
+      object-fit: contain;
+    }
+  }
 `;

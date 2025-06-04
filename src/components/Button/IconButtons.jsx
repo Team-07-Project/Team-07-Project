@@ -1,4 +1,4 @@
-/** @jsxImportSource @emotion/react */
+import { BREAKPOINTS } from "../../constants/constants";
 import { css } from "@emotion/react";
 
 import iconPlus from "../../assets/images/iconPlus.svg";
@@ -6,7 +6,6 @@ import iconDelete from "../../assets/images/iconDeleted.svg";
 import iconArrowLeft from "../../assets/images/iconArrowLeft.svg";
 import iconArrowRight from "../../assets/images/iconArrowRight.svg";
 import iconCheck from "../../assets/images/iconCheck.svg";
-import iconShare20 from "../../assets/images/iconShare20.svg";
 import iconShare24 from "../../assets/images/iconShare24.svg";
 
 import { useNavigate } from "react-router-dom";
@@ -53,15 +52,8 @@ export const IconCheckButton = () => (
   </button>
 );
 
-//아래 두 버튼은 추후에 합쳐서 반응형으로 만들지, 각자 렌더링할지 고민중
-export const IconShare20Button = () => (
+export const IconShareButton = () => (
   <button css={shareButton}>
-    <img src={iconShare20} alt="Share button" />
-  </button>
-);
-
-export const IconShare24Button = () => (
-  <button css={share24Button}>
     <img src={iconShare24} alt="Share button" />
   </button>
 );
@@ -117,6 +109,7 @@ const grayButton = css`
 `;
 
 /** ----------- */
+/** 개별 css */
 
 const plusButton = css`
   ${grayButton}
@@ -147,12 +140,20 @@ const checkButton = css`
 
 const shareButton = css`
   ${whiteButton}
-  width: 36px;
-  height: 32px;
-`;
-
-const share24Button = css`
-  ${whiteButton}
   width: 56px;
   height: 36px;
+
+  img {
+    width: 24px;
+    aspect-ratio: 1 / 1;
+  }
+
+  @media (max-width: ${BREAKPOINTS.md}px) {
+    width: 36px;
+    height: 32px;
+
+    img {
+      width: 20px;
+    }
+  }
 `;
