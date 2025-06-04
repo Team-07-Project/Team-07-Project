@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import cardPreview from "../../../assets/images/card_preview.png";
 import emojiPreview from "../../../assets/images/emoji_preview.png";
@@ -242,14 +241,7 @@ const breakLine = css`
 
 export const responsiveBox = css`
   width: 100%;
-  max-width: 320px;
-
-  @media (min-width: ${BREAKPOINTS.md}px) {
-    max-width: 720px;
-  }
-  @media (min-width: ${BREAKPOINTS.lg}px) {
-    max-width: 1200px;
-  }
+  max-width: clamp(320px, 90vw, 1200px);
 `;
 
 // 하단 '구경해보기' 버튼 스타일 (정렬 + 반응형 너비)
