@@ -2,19 +2,22 @@ import { css } from "@emotion/react";
 import { btnStyles } from "./btnStylesMap";
 
 const Button = ({
+  as: Component = "button",
   variant = "primary",
   size = "md",
   children,
   disabled,
   onClick,
+  ...resProps
 }) => (
-  <button
+  <Component
     css={ButtonStyle({ size, variant, disabled })}
-    disabled={disabled}
+    disabled={Component === "button" ? disabled : undefined}
+    {...resProps}
     onClick={onClick}
   >
     {children}
-  </button>
+  </Component>
 );
 
 export default Button;
