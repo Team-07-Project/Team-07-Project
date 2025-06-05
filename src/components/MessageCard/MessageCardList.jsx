@@ -35,6 +35,7 @@ function CardListResult({ messages, editMode, openModal, onMarkDelete}) {
           id={message.id}
           messageData={message}
           isEditable={editMode}
+          onDelete={onMarkDelete} // 휴지통 클릭 시 onMarkDelete(msg.id) 호출
         />
       ))}
     </div>
