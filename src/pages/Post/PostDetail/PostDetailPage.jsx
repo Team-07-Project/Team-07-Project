@@ -11,9 +11,12 @@ import Button from "../../../components/Button";
 
 const PostDetailPage = () => {
   const { id } = useParams();
+
   // url이 /post/:id/edit 일 경우에 editMode인 걸로 자동 적용
   const isEdit = useMatch("/post/:id/edit"); // editMode 판별용
+
   const navigate = useNavigate();
+
   // ── fetcher: useInfiniteScroll에게 "limit, offset"을 넘겨주면 getMessages 로직을 실행해서 메시지 배열을 반환하도록 만든다.
   const fetchMessages = useCallback(
     (limit, offset) => getMessages({ id, team: TEAM, limit, offset }),
@@ -23,10 +26,10 @@ const PostDetailPage = () => {
   // ── baseLimit = 6 (원하는 한 화면에 보여질 총 메시지 개수 + 고정 요소 1개)
   const baseLimit = 6;
 
-  // editMode에 따라 첫 fetch 개수 다르게 조정
+  // editMode에 따라 첫 fetch 개수 다르게 조정(edit모드일 때에는 고정요소 0개, edit모드가 아닐 때에는 고정요소 1개있어서 -1)
   const adjustFirstCount = isEdit ? 0 : -1;
 
-  // 훅 호출: items, isLoading, hasMore, observerRef을 받아온다.
+  // 훅 호출: items, isLoading, hasMore, observerRef, error를 받아온다.
   const {
     items: messages,
     isLoading,
@@ -37,6 +40,7 @@ const PostDetailPage = () => {
 
   // 삭제 대상으로 표시된 메시지 ID들을 모아두는 state
   const [deletedIds, setDeletedIds] = useState([]);
+  const [actuallyDeleted, setActuallyDeleted] = useState(new Set());
 
   // 중간에 url이 바뀔 경우, 삭제하려고 선택한 요소들 초기화
   useEffect(() => {
@@ -47,6 +51,7 @@ const PostDetailPage = () => {
 
   // 휴지통 클릭 시: deletedIds에 ID를 추가만 함
   const handleMarkDelete = (msgId) => {
+    if (actuallyDeleted.has(msgId)) return;
     setDeletedIds((prev) => {
       if (prev.includes(msgId)) return prev;
       return [...prev, msgId];
@@ -60,6 +65,9 @@ const PostDetailPage = () => {
       await Promise.all(
         deletedIds.map((msgId) => deleteMessage({ id: msgId }))
       );
+      // 삭제된 메시지 ID들을 기억
+      setActuallyDeleted(new Set([...actuallyDeleted, ...deletedIds]));
+      setDeletedIds([]);
       // 완료 후 상세 페이지(뷰 모드)로 이동
       navigate(`/post/${id}`);
     } catch (err) {
@@ -67,6 +75,11 @@ const PostDetailPage = () => {
       alert("메시지 삭제 중 오류가 발생했습니다.");
     }
   };
+
+// 최종적으로 보여주는 메세지
+const filteredMessages = messages.filter(
+  (msg) => !deletedIds.includes(msg.id) && !actuallyDeleted.has(msg.id)
+);
 
   return (
     <>
@@ -86,7 +99,7 @@ const PostDetailPage = () => {
 
           {/* MessageCardList에 editMode와 삭제 대상 콜백(onMarkDelete)를 넘겨준다 */}
           <MessageCardList
-            messages={messages}
+            messages={filteredMessages}
             editMode={isEdit}
             onMarkDelete={handleMarkDelete}
           />
