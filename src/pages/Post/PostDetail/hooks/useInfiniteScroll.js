@@ -89,7 +89,7 @@ export function useInfiniteScroll(fetcher, baseLimit, options = {}) {
         const [entry] = entries;
         if (!isLoading && entry.isIntersecting) loadMore();
       },
-      { threshold: 0.4 }
+      { threshold: 0.3 }
     );
 
     const ele = observerRef.current;

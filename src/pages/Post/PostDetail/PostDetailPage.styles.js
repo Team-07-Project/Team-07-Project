@@ -2,8 +2,8 @@ import { css } from "@emotion/react";
 import { BREAKPOINTS, POST_PADDINGS } from "../../../constants/constants";
 
 export const loader = css`
-  margin-top: 110px;
-  padding: 24px;
+  /* margin-top: 80px; */
+  /* padding: 24px; */
   text-align: center;
   color: var(--gray-500);
 `;
