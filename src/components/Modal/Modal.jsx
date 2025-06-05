@@ -68,13 +68,9 @@ const ModalDividerStyle = css`
 `;
 
 const ModalBodyStyle = css`
-  height: 180px;
+  height: 240px;
   margin-bottom: 24px;
   overflow: auto;
-
-  @media (min-width: ${BREAKPOINTS.md}px) {
-    height: 240px;
-  }
 `;
 
 const ModalActionsStyle = css`

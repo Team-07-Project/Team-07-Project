@@ -47,8 +47,12 @@ const MessageCardModal = ({ data }) => {
         <MessageCardContent
           content={content}
           customCss={css`
+            display: block;
             overflow: visible;
-            -webkit-line-clamp: initial;
+            text-overflow: initial;
+            -webkit-line-clamp: unset;
+            -webkit-box-orient: initial;
+            height: auto;
           `}
         />
       </Modal.body>
