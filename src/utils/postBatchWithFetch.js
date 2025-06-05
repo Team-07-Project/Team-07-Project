@@ -4,13 +4,10 @@
  * 지울 예정입니다.
  */
 
-import { BASE_URL } from "../constants/env";
-
 const TEAM = "16-7";
 const RECIPIENT_ID = 11725;
-const START_INDEX = 18;
+const START_INDEX = 9;
 const TOTAL = 100;
-const BASE_URL = BASE_URL;
 
 async function postBatchWithFetch() {
   for (let i = 0; i < TOTAL; i++) {
@@ -28,7 +25,7 @@ async function postBatchWithFetch() {
       font: "나눔손글씨 손편지체",
     };
 
-    const url = `${BASE_URL}/${TEAM}/recipients/${RECIPIENT_ID}/messages/`;
+    const url = `https://rolling-api.vercel.app/${TEAM}/recipients/${RECIPIENT_ID}/messages/`;
 
     try {
       const res = await fetch(url, {
@@ -53,7 +50,7 @@ async function postBatchWithFetch() {
     }
 
     // (선택) 서버 과부하 방지를 위해 잠시 딜레이를 줄 수 있습니다
-    // await new Promise((r) => setTimeout(r, 200));
+    await new Promise((r) => setTimeout(r, 200));
   }
 
   console.log("모든 POST 요청 완료!");
