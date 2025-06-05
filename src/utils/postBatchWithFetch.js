@@ -1,6 +1,7 @@
 /**
- * Node 18+에서 동작하는 스크립트 예시
  * - “삭제 테스트18”부터 시작해서 100개(=18~117) POST 요청을 보냅니다.
+ * 테스트용 데이터 넣는 배치파일입니다.
+ * 지울 예정입니다.
  */
 
 import { BASE_URL } from "../constants/env";
@@ -39,7 +40,9 @@ async function postBatchWithFetch() {
       if (!res.ok) {
         const errText = await res.text();
         console.error(
-          `[${i + 1}/${TOTAL}] POST 실패: ${res.status} ${res.statusText}\n${errText}`
+          `[${i + 1}/${TOTAL}] POST 실패: ${res.status} ${
+            res.statusText
+          }\n${errText}`
         );
       } else {
         const data = await res.json();

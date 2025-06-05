@@ -37,11 +37,13 @@ const PostDetailPage = () => {
 
   // 삭제 대상으로 표시된 메시지 ID들을 모아두는 state
   const [deletedIds, setDeletedIds] = useState([]);
-  // useEffect(() => {
-  //   if (!isEdit) {
-  //     setDeletedIds([]);
-  //   }
-  // }, [isEdit]);
+
+  // 중간에 url이 바뀔 경우, 삭제하려고 선택한 요소들 초기화
+  useEffect(() => {
+    if (!isEdit) {
+      setDeletedIds([]);
+    }
+  }, [isEdit]);
 
   // 휴지통 클릭 시: deletedIds에 ID를 추가만 함
   const handleMarkDelete = (msgId) => {

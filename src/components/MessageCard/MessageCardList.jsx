@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 /**
  * @param {boolean} editMode - 편집 모드
  */
-const MessageCardList = ({ messages = [], editMode = false,onMarkDelete }) => {
+const MessageCardList = ({ messages = [], editMode = false, onMarkDelete }) => {
   const [localMessages, setLocalMessages] = useState(messages);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const MessageCardList = ({ messages = [], editMode = false,onMarkDelete }) => {
     // 화면상에서 해당 메시지 제거
     setLocalMessages((prev) => prev.filter((msg) => msg.id !== msgId));
     // 실제 삭제 대상 ID를 부모(PostDetailPage)에 전달
-      onMarkDelete(msgId);
+    onMarkDelete(msgId);
   };
 
   if (!localMessages || localMessages.length === 0) {
