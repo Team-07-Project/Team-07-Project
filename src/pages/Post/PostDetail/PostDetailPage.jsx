@@ -1,17 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useMatch, useNavigate, useParams } from "react-router-dom";
 import { deleteMessage, getMessages } from "../../../api/post/fetchMessages";
-import { useCallback, useEffect, useState } from "react";
-import { useMatch, useNavigate, useParams } from "react-router-dom";
-import { deleteMessage, getMessages } from "../../../api/post/fetchMessages";
 import MessageCardList from "../../../components/MessageCard/MessageCardList";
-import { loader, messagesWrapper } from "./PostDetailPage.styles";
 import { loader, messagesWrapper } from "./PostDetailPage.styles";
 import { TEAM } from "../../../constants/constants";
 import { useInfiniteScroll } from "./hooks/useInfiniteScroll";
-import GlobalHeader from "../../../components/Header/GlobalHeader";
-import ListPageHeader from "../../List/ListPageHeader";
-import Button from "../../../components/Button";
 import GlobalHeader from "../../../components/Header/GlobalHeader";
 import ListPageHeader from "../../List/ListPageHeader";
 import Button from "../../../components/Button";
@@ -84,43 +77,13 @@ const PostDetailPage = () => {
     }
   };
 
-// 최종적으로 보여주는 메세지
-const filteredMessages = messages.filter(
-  (msg) => !deletedIds.includes(msg.id) && !actuallyDeleted.has(msg.id)
-);
+  // 최종적으로 보여주는 메세지
+  const filteredMessages = messages.filter(
+    (msg) => !deletedIds.includes(msg.id) && !actuallyDeleted.has(msg.id)
+  );
 
   return (
     <>
-      <section style={{ backgroundColor: "#e4fbdc" }}>
-        <GlobalHeader />
-        <ListPageHeader />
-        <div css={messagesWrapper}>
-          {isEdit ? (
-            // 편집 모드: “저장하기” 버튼으로 변경
-            <Button onClick={handleSave}>저장하기</Button>
-          ) : (
-            // 뷰 모드: “편집하기” 버튼
-            <Button onClick={() => navigate(`/post/${id}/edit`)}>
-              편집하기
-            </Button>
-          )}
-
-          {/* MessageCardList에 editMode와 삭제 대상 콜백(onMarkDelete)를 넘겨준다 */}
-          <MessageCardList
-            messages={filteredMessages}
-            editMode={isEdit}
-            onMarkDelete={handleMarkDelete}
-          />
-          {error && (
-            <div style={{ color: "red", textAlign: "center" }}>{error}</div>
-          )}
-        </div>
-        {hasMore && (
-          <div ref={observerRef} css={loader}>
-            {isLoading ? "불러오는 중..." : "더 불러오기..."}
-          </div>
-        )}
-      </section>
       <section style={{ backgroundColor: "#e4fbdc" }}>
         <GlobalHeader />
         <ListPageHeader />
