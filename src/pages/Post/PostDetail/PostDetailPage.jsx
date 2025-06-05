@@ -38,11 +38,12 @@ const PostDetailPage = () => {
     error,
   } = useInfiniteScroll(fetchMessages, baseLimit, { adjustFirstCount });
 
-  // 삭제 대상으로 표시된 메시지 ID들을 모아두는 state
+  // 삭제 대상으로 선택된 메시지들(휴지통 버튼 누른 요소들)의 ID들을 모아두는 state
   const [deletedIds, setDeletedIds] = useState([]);
+  // 삭제 대상으로 선택 + 저장하기까지 눌른 메세지들 상태
   const [actuallyDeleted, setActuallyDeleted] = useState(new Set());
 
-  // 중간에 url이 바뀔 경우, 삭제하려고 선택한 요소들 초기화
+  // 중간에 url이 바뀔 경우(edit모드일 때, 아닐 때), 삭제하려고 선택한 요소들 초기화
   useEffect(() => {
     if (!isEdit) {
       setDeletedIds([]);
