@@ -11,9 +11,7 @@ function Router() {
       <Route path="/" element={<MainPage />} />
       <Route path="/list" element={<ListPage />} />
       <Route path="/post" element={<PostCreatePage />} />
-      <Route path="/post/:id" element={<PostDetailPage />} />
-      {/* <Route path="/post/:id/edit" element={<PostEditPage />} />
-      <Route path="/post/:id/message" element={<PostMessagePage />} /> */}
+      <Route path="/post/:id/*" element={<PostDetailPage />} />
 
       {/* 스타일 가이드 페이지: 디자인 시스템의 공통 컴포넌트 테스트 및 확인용 임시 공간입니다. */}
       <Route path="styleGuide" element={<StyleGuidePage />} />

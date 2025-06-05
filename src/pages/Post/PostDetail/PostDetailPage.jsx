@@ -1,10 +1,13 @@
-import { useCallback } from "react";
-import { useMatch, useParams } from "react-router-dom";
-import { getMessages } from "../../../api/post/fetchMessages";
+import { useCallback, useEffect, useState } from "react";
+import { useMatch, useNavigate, useParams } from "react-router-dom";
+import { deleteMessage, getMessages } from "../../../api/post/fetchMessages";
 import MessageCardList from "../../../components/MessageCard/MessageCardList";
-import { loader } from "./PostDetailPage.styles";
+import { loader, messagesWrapper } from "./PostDetailPage.styles";
 import { TEAM } from "../../../constants/constants";
 import { useInfiniteScroll } from "./hooks/useInfiniteScroll";
+import GlobalHeader from "../../../components/Header/GlobalHeader";
+import ListPageHeader from "../../List/ListPageHeader";
+import Button from "../../../components/Button";
 
 const PostDetailPage = () => {
   const { id } = useParams();
@@ -12,27 +15,21 @@ const PostDetailPage = () => {
   // url이 /post/:id/edit 일 경우에 editMode인 걸로 자동 적용
   const isEdit = useMatch("/post/:id/edit"); // editMode 판별용
 
-  // ── fetcher: useInfiniteScroll에게 "limit, offset"을 넘겨주면
-  //    getMessages 로직을 실행해서 메시지 배열을 반환하도록 만든다.
+  const navigate = useNavigate();
+
+  // ── fetcher: useInfiniteScroll에게 "limit, offset"을 넘겨주면 getMessages 로직을 실행해서 메시지 배열을 반환하도록 만든다.
   const fetchMessages = useCallback(
-    (limit, offset) => {
-      return getMessages({
-        id,
-        team: TEAM,
-        limit,
-        offset,
-      });
-    },
+    (limit, offset) => getMessages({ id, team: TEAM, limit, offset }),
     [id]
   );
 
-  // ── baseLimit = 12 (원하는 한 화면에 보여질 총 메시지 개수 + 고정 요소 1개)
-  const baseLimit = 12;
+  // ── baseLimit = 6 (원하는 한 화면에 보여질 총 메시지 개수 + 고정 요소 1개)
+  const baseLimit = 6;
 
-  // editMode에 따라 첫 fetch 개수 다르게 조정
+  // editMode에 따라 첫 fetch 개수 다르게 조정(edit모드일 때에는 고정요소 0개, edit모드가 아닐 때에는 고정요소 1개있어서 -1)
   const adjustFirstCount = isEdit ? 0 : -1;
 
-  // 훅 호출: items, isLoading, hasMore, observerRef을 받아온다.
+  // 훅 호출: items, isLoading, hasMore, observerRef, error를 받아온다.
   const {
     items: messages,
     isLoading,
@@ -41,15 +38,81 @@ const PostDetailPage = () => {
     error,
   } = useInfiniteScroll(fetchMessages, baseLimit, { adjustFirstCount });
 
+  // 삭제 대상으로 표시된 메시지 ID들을 모아두는 state
+  const [deletedIds, setDeletedIds] = useState([]);
+  const [actuallyDeleted, setActuallyDeleted] = useState(new Set());
+
+  // 중간에 url이 바뀔 경우, 삭제하려고 선택한 요소들 초기화
+  useEffect(() => {
+    if (!isEdit) {
+      setDeletedIds([]);
+    }
+  }, [isEdit]);
+
+  // 휴지통 클릭 시: deletedIds에 ID를 추가만 함
+  const handleMarkDelete = (msgId) => {
+    if (actuallyDeleted.has(msgId)) return;
+    setDeletedIds((prev) => {
+      if (prev.includes(msgId)) return prev;
+      return [...prev, msgId];
+    });
+  };
+
+  // “저장하기” 버튼 클릭 시 실제 삭제 API를 호출하고, 삭제 후 /post/:id/ 로 돌아감
+  const handleSave = async () => {
+    try {
+      // deletedIds 에 쌓인 ID들을 순회하며 API 호출
+      await Promise.all(
+        deletedIds.map((msgId) => deleteMessage({ id: msgId }))
+      );
+      // 삭제된 메시지 ID들을 기억
+      setActuallyDeleted(new Set([...actuallyDeleted, ...deletedIds]));
+      setDeletedIds([]);
+      // 완료 후 상세 페이지(뷰 모드)로 이동
+      navigate(`/post/${id}`);
+    } catch (err) {
+      console.error(err);
+      alert("메시지 삭제 중 오류가 발생했습니다.");
+    }
+  };
+
+// 최종적으로 보여주는 메세지
+const filteredMessages = messages.filter(
+  (msg) => !deletedIds.includes(msg.id) && !actuallyDeleted.has(msg.id)
+);
+
   return (
     <>
-      <MessageCardList messages={messages} editMode={isEdit} />
-      {hasMore && (
-        <div ref={observerRef} css={loader}>
-          {isLoading ? "불러오는 중..." : "더 불러오기..."}
+      <section style={{ backgroundColor: "#e4fbdc" }}>
+        <GlobalHeader />
+        <ListPageHeader />
+        <div css={messagesWrapper}>
+          {isEdit ? (
+            // 편집 모드: “저장하기” 버튼으로 변경
+            <Button onClick={handleSave}>저장하기</Button>
+          ) : (
+            // 뷰 모드: “편집하기” 버튼
+            <Button onClick={() => navigate(`/post/${id}/edit`)}>
+              편집하기
+            </Button>
+          )}
+
+          {/* MessageCardList에 editMode와 삭제 대상 콜백(onMarkDelete)를 넘겨준다 */}
+          <MessageCardList
+            messages={filteredMessages}
+            editMode={isEdit}
+            onMarkDelete={handleMarkDelete}
+          />
+          {error && (
+            <div style={{ color: "red", textAlign: "center" }}>{error}</div>
+          )}
         </div>
-      )}
-      {error && <div style={{ color: "red", textAlign: "center" }}>{error}</div>}
+        {hasMore && (
+          <div ref={observerRef} css={loader}>
+            {isLoading ? "불러오는 중..." : "더 불러오기..."}
+          </div>
+        )}
+      </section>
     </>
   );
 };

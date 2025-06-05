@@ -52,7 +52,7 @@ export function useInfiniteScroll(fetcher, baseLimit, options = {}) {
 
       const nextOffset = offset + newItems.length;
 
-      // 백엔드에서 ordering이 없어서 중복 요소들이 생김 - filter이용해서 중복요소 제거하고 기존 items뒤에 붙임.
+      // 데이터 가져올 떄 ID중복 요소들이 생김 - filter이용해서 중복요소 제거하고 기존 items뒤에 붙임.
       setItems((prev) => {
         const existingIds = new Set(prev.map((item) => item.id));
         const deduped = newItems.filter((item) => !existingIds.has(item.id));
@@ -87,16 +87,9 @@ export function useInfiniteScroll(fetcher, baseLimit, options = {}) {
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        if (!isLoading && entry.isIntersecting) {
-          loadMore();
-        }
+        if (!isLoading && entry.isIntersecting) loadMore();
       },
-      {
-        root: null,
-        threshold: 1.0,
-        // 살짝 여유를 두고 감지하고 싶다면 조절 가능
-        rootMargin: "0px 0px 100px 0px",
-      }
+      { threshold: 0.3 }
     );
 
     const ele = observerRef.current;
@@ -107,5 +100,5 @@ export function useInfiniteScroll(fetcher, baseLimit, options = {}) {
     };
   }, [loadMore, isLoading, hasMore, adjustFirstCount]);
 
-  return { items, isLoading, hasMore, observerRef,error };
+  return { items, isLoading, hasMore, observerRef, error };
 }
