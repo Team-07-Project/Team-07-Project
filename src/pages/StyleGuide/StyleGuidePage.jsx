@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import Button from "../../components/Button";
 import AddEmojiButton from "../../components/Button/AddEmojiButton";
@@ -10,7 +9,9 @@ import MessageCard from "../../components/MessageCard/MessageCard";
 import AddMessageCardButton from "../../components/MessageCard/AddMessageCardButton";
 import MessageCardList from "../../components/MessageCard/MessageCardList";
 import MessageCardListStyle from "../../components/MessageCard/MessageCardListStyle";
-import { useToast } from "../../components/Toast/useToast";
+import useToast from "../../components/Toast/useToast";
+import useModal from "../../components/Modal/useModal";
+import MessageCardModal from "../../components/Modal/MessageCardModal";
 
 const mockMessage = {
   sender: "강미나",
@@ -29,7 +30,8 @@ const mockMessages = [
     profileImageURL:
       "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
     relationship: "가족",
-    content: "열심히 일하는 모습 멋있습니다.",
+    content:
+      "열심히 일하는 모습 멋있습니다. 코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요! 코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요! 코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요! 코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요! 코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요!",
     font: "Pretendard",
     createdAt: "2023-11-01T08:05:25.399056Z",
   },
@@ -92,6 +94,7 @@ const mockMessages = [
 
 const StyleGuidePage = () => {
   const { showToast } = useToast();
+  const { showModal } = useModal();
 
   return (
     <div css={pageStyle}>
@@ -294,6 +297,22 @@ const StyleGuidePage = () => {
         >
           토스트 열기
         </Button>
+      </section>
+      <section css={sectionStyle}>
+        <h2>Modal</h2>
+        <Button
+          variant="outlined"
+          onClick={() => showModal(<MessageCardModal data={mockMessage} />)}
+        >
+          모달 열기
+        </Button>
+        <MessageCardList
+          messages={mockMessages}
+          editMode={false}
+          openMessageCardModal={(data) =>
+            showModal(<MessageCardModal data={data} />)
+          }
+        />
       </section>
     </div>
   );

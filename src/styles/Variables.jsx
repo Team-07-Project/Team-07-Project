@@ -78,6 +78,9 @@ export const Variables = () => (
         --radius-lg: 12px;
         --radius-xlg: 100px;
 
+        /* box-shadow */
+        --box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+
         /* font-size */
         --font-size-12: 12px;
         --font-size-14: 14px;
@@ -99,6 +102,9 @@ export const Variables = () => (
 
         /* header */
         --header-padding: 16px;
+
+        /* modal */
+        --modal-width: 600px;
       }
 
       @media (min-width: ${BREAKPOINTS.md}px) {

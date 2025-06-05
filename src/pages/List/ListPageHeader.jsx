@@ -1,13 +1,18 @@
 import { css } from "@emotion/react";
 import { GlobalHeaderStyle } from "../../components/Header/GlobalHeader";
 import { IconShareButton } from "../../components/Button/IconButtons";
+import { BREAKPOINTS } from "../../constants/constants";
 import AddEmojiButton from "../../components/Button/AddEmojiButton";
 import MessageAuthorCount from "../../components/MessageAuthorCount";
+import DropdownSelect from "../../components/Dropdown/Dropdown";
+import { SHARE_DROPDOWN_ITEMS } from "../../constants/constants";
+import ReactionBadges from "../../components/Dropdown/ReactionBadges";
+import { useToast } from "./../../components/Toast/useToast";
 
 // MessageAuthors 컴포넌트용 mockData
 import avatarSampleImg1 from "../../assets/images/img-avatar-sample.jpg";
 import avatarSampleImg2 from "../../assets/images/img-avatar-default.png";
-import { BREAKPOINTS } from "../../constants/constants";
+
 const mockAvatarData = [
   { id: "avatar1", profileImageURL: avatarSampleImg1 },
   { id: "avatar2", profileImageURL: avatarSampleImg2 },
@@ -16,14 +21,33 @@ const mockAvatarData = [
   { id: "avatar5", profileImageURL: avatarSampleImg2 },
 ];
 
-// ListPageHeader.jsx
 const ListPageHeader = ({ recipient }) => {
+  const { showToast } = useToast();
+
   const showAddReactionPopover = () => {
     console.log("popover open");
   };
 
-  const shareRollingPaper = () => {
-    alert("ok");
+  const changeShareOption = (option) => {
+    if (!option) return;
+
+    if (option.label === "URL 복사") {
+      const currentUrl = location.href;
+
+      // 클립보드에 URL 복사 - 실패
+      if (!navigator.clipboard) {
+        showToast({ message: "클립보드 복사를 지원하지 않는 브라우저입니다." });
+        return;
+      }
+
+      // 클립보드에 URL 복사 - 성공
+      navigator.clipboard.writeText(currentUrl);
+      showToast({ message: option.value });
+    }
+
+    if (option.label === "카카오톡 공유") {
+      console.log("카카오톡 공유하기...");
+    }
   };
 
   return (
@@ -35,14 +59,17 @@ const ListPageHeader = ({ recipient }) => {
             <MessageAuthorCount items={mockAvatarData} />
           </li>
           <li className="li-action-reaction-badges">
-            {/* Badges 컴포넌트 생성 이후 추가 예정 */}
-            {/* <ReactionBadges /> */}
+            <ReactionBadges />
             <AddEmojiButton size="sm" onClick={showAddReactionPopover}>
               추가
             </AddEmojiButton>
           </li>
           <li className="li-action-share">
-            <IconShareButton onClick={shareRollingPaper} />
+            <DropdownSelect
+              options={SHARE_DROPDOWN_ITEMS}
+              customButton={<IconShareButton />}
+              onChange={changeShareOption}
+            />
           </li>
         </ul>
       </div>

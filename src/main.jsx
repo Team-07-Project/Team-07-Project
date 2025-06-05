@@ -5,15 +5,18 @@ import { Reset } from "./styles/Reset.jsx";
 import { Variables } from "./styles/Variables.jsx";
 import { BrowserRouter } from "react-router-dom";
 import ToastProvider from "./components/Toast/ToastProvider.jsx";
+import ModalProvider from "./components/Modal/ModalProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ToastProvider>
-      <Reset />
-      <Variables />
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ToastProvider>
+    <ModalProvider>
+      <ToastProvider>
+        <Reset />
+        <Variables />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ToastProvider>
+    </ModalProvider>
   </StrictMode>
 );

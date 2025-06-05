@@ -6,6 +6,8 @@ const ToastContainer = ({ toasts, hideToast }) => {
   const containerEl = document.getElementById("toast-div");
   if (!containerEl) return null;
 
+  if (toasts.length === 0) return null; // 토스트 없을 때 빈 ul 태그 렌더링 방지
+
   return ReactDOM.createPortal(
     <ul css={ToastContainerStyle}>
       {toasts?.map((toast) => (

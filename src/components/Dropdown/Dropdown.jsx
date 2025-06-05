@@ -3,8 +3,8 @@ import { css } from "@emotion/react";
 
 import { useEffect, useRef, useState } from "react";
 
-import iconArrowDown from "../assets/images/iconArrowDown.svg";
-import iconArrowTop from "../assets/images/iconArrowTop.svg";
+import iconArrowDown from "../../assets/images/iconArrowDown.svg";
+import iconArrowTop from "../../assets/images/iconArrowTop.svg";
 
 const DropdownSelect = ({
   selectedOption, // 선택된 항목

@@ -5,7 +5,6 @@ const MessageCardStyle = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 230px;
   padding: 28px 24px 24px;
   background-color: var(--white);
   border-radius: var(--radius-lg);
@@ -29,44 +28,51 @@ const MessageCardStyle = css`
     border-bottom: 1px solid var(--gray-200);
   }
 
-  .sender-profile-wrap {
-    display: flex;
-    gap: 14px;
-
-    .sender-profile {
-      .name {
-        display: block;
-        font-size: var(--font-size-20);
-      }
-    }
-  }
-
   .card-body {
-    height: 100%;
-  }
-
-  .content {
-    height: 56px;
-    margin-bottom: 16px;
-    padding-top: 16px;
-    font-size: var(--font-size-15);
-    color: var(--gray-600);
-    display: -webkit-box;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-
-    @media (min-width: ${BREAKPOINTS.md}px) {
-      height: 100px;
-      font-size: var(--font-size-18);
-    }
-  }
-
-  .date {
-    font-size: var(--font-size-12);
-    color: var(--gray-400);
+    min-height: 110px;
   }
 `;
 
 export default MessageCardStyle;
+
+export const MessageCardProfileStyle = css`
+  display: flex;
+  gap: 10px;
+
+  .sender-name {
+    display: block;
+    font-size: var(--font-size-18);
+  }
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    gap: 14px;
+
+    .sender-name {
+      font-size: var(--font-size-20);
+    }
+  }
+`;
+
+export const MessageCardContentStyle = css`
+  height: 56px;
+  margin-bottom: 16px;
+  padding-top: 16px;
+  font-size: var(--font-size-15);
+  color: var(--gray-600);
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    height: 100px;
+    font-size: var(--font-size-18);
+    -webkit-line-clamp: 3;
+  }
+`;
+
+export const MessageCardCreatedAtStyle = css`
+  font-size: var(--font-size-12);
+  color: var(--gray-400);
+`;
