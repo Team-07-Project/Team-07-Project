@@ -7,7 +7,7 @@ import MessageAuthorCount from "../../components/MessageAuthorCount";
 import DropdownSelect from "../../components/Dropdown/Dropdown";
 import { SHARE_DROPDOWN_ITEMS } from "../../constants/constants";
 import ReactionBadges from "../../components/Dropdown/ReactionBadges";
-import { useToast } from "./../../components/Toast/useToast";
+import useToast from "./../../components/Toast/useToast";
 
 // MessageAuthors 컴포넌트용 mockData
 import avatarSampleImg1 from "../../assets/images/img-avatar-sample.jpg";
