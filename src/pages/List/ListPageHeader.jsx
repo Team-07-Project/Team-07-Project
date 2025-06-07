@@ -2,12 +2,11 @@ import { css } from "@emotion/react";
 import { GlobalHeaderStyle } from "../../components/Header/GlobalHeader";
 import { IconShareButton } from "../../components/Button/IconButtons";
 import { BREAKPOINTS } from "../../constants/constants";
-import EmojiPopover from "../../components/Dropdown/EmojiPopover";
 import MessageAuthorCount from "../../components/MessageAuthorCount";
 import DropdownSelect from "../../components/Dropdown/Dropdown";
 import { SHARE_DROPDOWN_ITEMS } from "../../constants/constants";
-import ReactionBadges from "../../components/Dropdown/ReactionBadges";
 import useToast from "./../../components/Toast/useToast";
+import ReactionBox from "../../components/Header/ReactionBox";
 
 // MessageAuthors 컴포넌트용 mockData
 import avatarSampleImg1 from "../../assets/images/img-avatar-sample.jpg";
@@ -58,9 +57,8 @@ const ListPageHeader = ({ recipient }) => {
           <li className="li-message-author-count">
             <MessageAuthorCount items={mockAvatarData} />
           </li>
-          <li className="li-action-reaction-badges">
-            <ReactionBadges />
-            <EmojiPopover />
+          <li>
+            <ReactionBox />
           </li>
           <li className="li-action-share">
             <DropdownSelect
@@ -121,11 +119,5 @@ const ListPageHeaderStyle = css`
     > li + li {
       padding-left: 14px;
     }
-  }
-
-  .li-action-reaction-badges {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
   }
 `;

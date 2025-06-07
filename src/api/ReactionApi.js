@@ -1,12 +1,14 @@
-import { BASE_URL } from "../constants/env";
+import { TEAM } from "../constants/constants";
+// import { BASE_URL } from "../constants/env";
+const BASE_URL = `https://rolling-api.vercel.app`;
 
 /** 객체형태로 get과 post를 ReactionsApi에 넣음. 사용할 땐 
  ReactionsApi.get  또는  ReactionsApi.post  로 사용 */
 const ReactionsApi = {
-  get: async ({ team, id, limit, offset }) => {
+  get: async ({ team = TEAM, id, limit, offset }) => {
     try {
       const res = await fetch(
-        `${BASE_URL}/${team}/recipients/${id}/reactions?limit=${limit}&offset=${offset}`
+        `${BASE_URL}/${team}/recipients/${id}/reactions/?limit=${limit}&offset=${offset}`
       );
 
       if (!res.ok) {
@@ -21,10 +23,10 @@ const ReactionsApi = {
     }
   },
 
-  post: async ({ team, id, emoji, type }) => {
+  post: async ({ team = TEAM, id, emoji, type }) => {
     try {
       const res = await fetch(
-        `${BASE_URL}/${team}/recipients/${id}/reactions`,
+        `${BASE_URL}/${team}/recipients/${id}/reactions/`,
         {
           method: "POST",
           headers: {

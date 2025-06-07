@@ -18,7 +18,7 @@ const emojiBadgeStyle = css`
   font-size: inherit;
   color: var(--white);
   background-color: rgba(0, 0, 0, 0.54);
-  padding: 8px 12px;
+  padding: 6px 12px;
   border-radius: var(--radius-xlg);
 `;
 
