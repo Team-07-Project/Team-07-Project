@@ -1,6 +1,14 @@
 import { css } from "@emotion/react";
 
-const Input = ({ id, placeholder = "", value, onChange, onBlur, error }) => {
+const Input = ({
+  id,
+  placeholder = "",
+  value,
+  onChange,
+  onBlur,
+  error,
+  ...props
+}) => {
   return (
     <>
       <div css={InputAreaStyle({ error })}>
@@ -12,6 +20,7 @@ const Input = ({ id, placeholder = "", value, onChange, onBlur, error }) => {
           onBlur={onBlur}
           placeholder={placeholder}
           css={InputStyle}
+          {...props}
         />
       </div>
       {error && <p css={ErrorMessageStyle}>{error}</p>}

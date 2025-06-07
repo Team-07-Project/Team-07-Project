@@ -4,6 +4,7 @@ export const BREAKPOINTS = {
   sm: 360,
 };
 
+export const CARDINAL_NUMBER = "16";
 export const TEAM = "7";
 
 export const SHARE_DROPDOWN_ITEMS = [
@@ -40,12 +41,20 @@ export const RELATIONSHIP_ITEMS = [
 
 export const FONTS_ITEMS = [
   {
-    label: "Pretendard (기본 설정)",
+    label: "Noto Sans",
+    value: "Noto Sans",
+  },
+  {
+    label: "Pretendard",
     value: "Pretendard",
   },
   {
-    label: "Noto Sans",
-    value: "Noto Sans",
+    label: "나눔명조",
+    value: "NanumMyeongjo",
+  },
+  {
+    label: "나눔손글씨 손편지체",
+    value: "NanumLetter",
   },
 ];
 
@@ -58,3 +67,4 @@ export const SLIDER_MAX_WIDTH =
   CARD_WIDTH_DESKTOP * CARDS_PER_VIEW_DESKTOP +
   SLIDER_GAP * (CARDS_PER_VIEW_DESKTOP - 1);
 
+export const NAME_MAX_LENGTH = 40;
