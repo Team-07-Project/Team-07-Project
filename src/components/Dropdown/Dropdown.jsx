@@ -12,6 +12,7 @@ const DropdownSelect = ({
   options = [], //[{label:..., value:..., onClick:...},{...}]
   customButton, // 버튼 커스텀?
   dropdownWidth = "140px", //trigger를 사용한 dropdown의 너비, 기본값인 140px은 ShereButton 일 때
+  isFontDropdown = false,
 }) => {
   const [internalValue, setInternalValue] = useState(
     () => (options?.length > 0 ? options[0] : null) //오류방지
@@ -86,6 +87,7 @@ const DropdownSelect = ({
               key={option.value}
               onClick={() => handleSelect(option)}
               css={dropdownOption}
+              style={isFontDropdown ? { fontFamily: option.value } : {}}
             >
               {option.label}
             </li>
@@ -103,10 +105,11 @@ export default DropdownSelect;
 const dropdownSelectWrapper = css`
   position: relative;
   display: inline-block;
+  max-width: 320px;
 `;
 
 const selectedTrigger = css`
-  width: 320px;
+  width: 100%;
   height: 50px;
   padding: 12px 16px;
   font-size: var(--font-size-16);

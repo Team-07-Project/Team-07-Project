@@ -6,7 +6,7 @@ const ToastContainer = ({ toasts, hideToast }) => {
   const containerEl = document.getElementById("toast-div");
   if (!containerEl) return null;
 
-  if (toasts.length === 0) return null; // 토스트 없을 때 빈 ul 태그 렌더링 방지
+  if (toasts.length === 0) return null; // 토스트 없을 때 빈 ol 태그 렌더링 방지
 
   return ReactDOM.createPortal(
     <ol css={ToastContainerStyle}>
@@ -33,10 +33,14 @@ const ToastContainerStyle = css`
   bottom: 70px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
-  max-width: 524px;
+  width: calc(100% - 40px);
   height: 64px;
   display: flex;
   flex-direction: column-reverse; // 토스트 역순으로 쌓기
   gap: 12px;
+
+  @media (min-width: 540px) {
+    width: 100%;
+    max-width: 524px;
+  }
 `;
