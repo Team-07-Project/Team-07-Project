@@ -3,6 +3,7 @@ import MessageCardStyle, {
   MessageCardCreatedAtStyle,
   MessageCardContentStyle,
   MessageCardProfileStyle,
+  SelectedCardStyle,
 } from "./MessageCardStyle";
 import Avatar from "../Avatar";
 import { IconDeleteButton } from "./../Button/IconButtons";
@@ -11,6 +12,8 @@ import formatDate from "../../utils/formatDate";
 const MessageCard = ({
   messageData = {},
   isEditable = false,
+  isSelected = false,
+  onToggleSelect = () => {},
   openModal = () => {},
 }) => {
   const {
@@ -23,12 +26,15 @@ const MessageCard = ({
   } = messageData || {};
 
   const handleDelete = (e) => {
-    e.stopPropagation(); // 이벤트 버블링 방지
-    alert("delete button clicked");
+    e.stopPropagation();
+    onToggleSelect();
   };
 
   return (
-    <div css={MessageCardStyle} onClick={() => openModal(messageData)}>
+    <div
+      css={[MessageCardStyle, isSelected && SelectedCardStyle]}
+      onClick={() => openModal(messageData)}
+    >
       <div className="card-header">
         <MessageCard.Profile
           sender={sender}

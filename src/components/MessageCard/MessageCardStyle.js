@@ -33,6 +33,11 @@ const MessageCardStyle = css`
   }
 `;
 
+export const SelectedCardStyle = css`
+  background-color: #FBD5D5;
+  border: 1px solid #E60023;
+`;
+
 export default MessageCardStyle;
 
 export const MessageCardProfileStyle = css`

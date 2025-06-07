@@ -2,9 +2,9 @@ import { Routes, Route } from "react-router-dom";
 import MainPage from "../pages/Main/components/MainPage.jsx";
 import ListPage from "../pages/List/ListPage";
 import StyleGuidePage from "../pages/StyleGuide/StyleGuidePage";
-import PostDetailPage from "../pages/Post/PostDetail/PostDetailPage.jsx";
 import PostCreatePage from "../pages/Post/PostCreatePage.jsx";
 import PostMessagePage from "../pages/Post/PostMessage/PostMessagePage.jsx";
+import MessagesPage from "../pages/Post/PostDetail/MessagesPage.jsx";
 
 function Router() {
   return (
@@ -13,6 +13,7 @@ function Router() {
       <Route path="/list" element={<ListPage />} />
       <Route path="/post" element={<PostCreatePage />} />
       <Route path="/post/:id" element={<PostDetailPage />} />
+      <Route path="/post/:id/*" element={<MessagesPage />} />
 
       {/* <Route path="/post/:id/edit" element={<PostEditPage />} />*/}
       <Route path="/post/:id/message" element={<PostMessagePage />} />

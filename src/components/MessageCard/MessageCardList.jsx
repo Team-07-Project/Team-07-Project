@@ -9,6 +9,8 @@ const MessageCardList = ({
   messages = [],
   editMode = false,
   openMessageCardModal = () => {},
+  selectedIds = [],
+  onToggle = () => {},
 }) => {
   if (!messages || messages.length === 0) {
     return <EmptyMessageCardList editMode={editMode} />;
@@ -20,11 +22,19 @@ const MessageCardList = ({
       messages={messages}
       editMode={editMode}
       openModal={openMessageCardModal}
+      selectedIds={selectedIds}
+      onToggle={onToggle}
     />
   );
 };
 
-function CardListResult({ messages, editMode, openModal }) {
+function CardListResult({
+  messages,
+  editMode,
+  openModal,
+  selectedIds,
+  onToggle,
+}) {
   return (
     <div css={MessageCardListStyle}>
       {!editMode && <AddMessageCardButton />}
@@ -35,6 +45,8 @@ function CardListResult({ messages, editMode, openModal }) {
           messageData={message}
           isEditable={editMode}
           openModal={openModal}
+          isSelected={selectedIds.includes(message.id)}
+          onToggleSelect={() => onToggle(message.id)}
         />
       ))}
     </div>

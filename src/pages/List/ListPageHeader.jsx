@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import { GlobalHeaderStyle } from "../../components/Header/GlobalHeader";
 import { IconShareButton } from "../../components/Button/IconButtons";
 import { BREAKPOINTS } from "../../constants/constants";
-import AddEmojiButton from "../../components/Button/AddEmojiButton";
+import EmojiPopover from "../../components/Dropdown/EmojiPopover";
 import MessageAuthorCount from "../../components/MessageAuthorCount";
 import DropdownSelect from "../../components/Dropdown/Dropdown";
 import { SHARE_DROPDOWN_ITEMS } from "../../constants/constants";
@@ -23,10 +23,6 @@ const mockAvatarData = [
 
 const ListPageHeader = ({ recipient }) => {
   const { showToast } = useToast();
-
-  const showAddReactionPopover = () => {
-    console.log("popover open");
-  };
 
   const changeShareOption = (option) => {
     if (!option) return;
@@ -64,9 +60,7 @@ const ListPageHeader = ({ recipient }) => {
           </li>
           <li className="li-action-reaction-badges">
             <ReactionBadges />
-            <AddEmojiButton size="sm" onClick={showAddReactionPopover}>
-              추가
-            </AddEmojiButton>
+            <EmojiPopover />
           </li>
           <li className="li-action-share">
             <DropdownSelect
@@ -127,5 +121,11 @@ const ListPageHeaderStyle = css`
     > li + li {
       padding-left: 14px;
     }
+  }
+
+  .li-action-reaction-badges {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
 `;

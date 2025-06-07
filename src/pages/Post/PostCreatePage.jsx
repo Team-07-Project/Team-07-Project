@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Label from "../../components/Form/Label";
+import Input from "../../components/Form/Input";
 import ToInput from "./components/ToInPut";
 import SelectBackground from "./components/SeletBackground";
 import GlobalHeader from "../../components/Header/GlobalHeader";
@@ -66,13 +68,21 @@ const PostCreatePage = () => {
       </HeaderWrapper>
 
       <Container>
-        <ToInput
+        <Label value="To." />
+        <Input
           value={to}
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="받는사람 이름을 입력해 주세요"
           error={toError}
         />
+        {/* <ToInput
+          value={to}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="받는사람 이름을 입력해 주세요"
+          error={toError}
+        /> */}
 
         <Background>
           <SelectBackground onChange={setBackground} />
